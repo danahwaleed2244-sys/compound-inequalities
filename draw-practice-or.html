@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تدرّبي على رسم الجناحين – المتباينات المركبة «أو»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF2F6; --panel:#FFFFFF; --ink:#16324F; --muted:#5B7088; --line:#B5C4D3;
+  --blue:#2F6FDB; --yellow:#E2A812; --green:#1F9D5B; --greenSoft:#E3F5EC; --red:#C83E3E; --redSoft:#FBE9E9;
+  --coral:#E8605A; --purple:#7A5AF8; --purpleSoft:#EEEAFE; --hollow:#FFFFFF;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+    --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --greenSoft:#173C2C; --red:#F07272; --redSoft:#3F2125;
+    --coral:#FF8A80; --purple:#A58BFF; --purpleSoft:#2A2550; --hollow:#162A3D; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+  --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --greenSoft:#173C2C; --red:#F07272; --redSoft:#3F2125;
+  --coral:#FF8A80; --purple:#A58BFF; --purpleSoft:#2A2550; --hollow:#162A3D; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Readex Pro",Tahoma,"Segoe UI",sans-serif;line-height:1.7}
+main{max-width:900px;margin:0 auto;padding:18px 12px 40px}
+.card{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 16px 18px}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,var(--blue) 0 25%,var(--yellow) 25% 50%,var(--green) 50% 75%,var(--coral) 75%)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.chip{display:inline-flex;gap:6px;font-size:.9rem;font-weight:500;padding:3px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chip b{color:var(--purple)}
+h1{font-size:clamp(1.4rem,5vw,2rem);margin:0;background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.m{display:inline-flex;direction:ltr;unicode-bidi:isolate;gap:.3em;align-items:baseline;white-space:nowrap}
+.m .n{direction:ltr;unicode-bidi:bidi-override}
+.m .w{direction:rtl;unicode-bidi:isolate}
+.top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-top:8px}
+.progress{display:flex;gap:6px}
+.progress span{width:26px;height:8px;border-radius:4px;background:var(--line)}
+.progress span.on{background:var(--purple)} .progress span.ok{background:var(--green)} .progress span.retry{background:var(--yellow)}
+.task{text-align:center;margin:10px 0 4px}
+.task .lbl{color:var(--muted);font-size:1rem}
+.task .ineq{font-size:clamp(1.9rem,7vw,2.6rem);font-weight:700}
+.guide{text-align:center;background:var(--purpleSoft);border-radius:12px;padding:8px 12px;font-weight:500;margin:6px 0 8px;min-height:2.6em}
+.tools{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+.tool{font:inherit;font-size:1rem;font-weight:700;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.tool .ic{font-size:1.3rem;line-height:1}
+.tool[aria-pressed="true"]{border-color:var(--purple);background:var(--purpleSoft);box-shadow:0 0 0 2px var(--purple) inset}
+svg{display:block;width:100%;height:auto;touch-action:manipulation;cursor:pointer;margin-top:6px}
+.axis{stroke:var(--ink);stroke-width:3}
+.tick{stroke:var(--ink);stroke-width:2.5}
+.num{fill:var(--ink);font-size:28px;font-family:"Readex Pro",Tahoma,sans-serif;text-anchor:middle}
+.draw{animation:draw .7s ease-out forwards}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.popc{animation:popc .3s ease-out;transform-box:fill-box;transform-origin:center}
+@keyframes popc{from{transform:scale(.3)}to{transform:scale(1)}}
+.bad{animation:shake .4s ease-in-out 2}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{font:inherit;font-size:1.05rem;font-weight:700;border-radius:12px;padding:10px 22px;cursor:pointer;border:2px solid var(--blue);background:transparent;color:var(--blue)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.go{background:var(--green);border-color:var(--green);color:#fff}
+.fb{display:none;margin-top:12px;border-radius:14px;padding:12px 16px}
+.fb.show{display:block}
+.fb.ok{background:var(--greenSoft);border:1px solid var(--green)}
+.fb.no{background:var(--redSoft);border:1px solid var(--red)}
+.fb ul{margin:.3em 0 0;padding-inline-start:1.2em}
+.fb li{margin:.15em 0}
+.end{text-align:center}
+.stars{font-size:2.8rem;color:var(--yellow);letter-spacing:.1em}
+input[type=text]{font:inherit;font-size:1.1rem;width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin:8px 0 6px}
+.cert{margin:14px auto 8px;max-width:560px;border:4px solid transparent;border-radius:16px;padding:16px;background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(135deg,var(--blue),var(--yellow),var(--green),var(--coral),var(--purple)) border-box}
+.cert .cname{font-size:1.7rem;font-weight:700;margin:4px 0}
+.cert .sign{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
+.cert .sign b{color:var(--purple)}
+.hidden{display:none}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-top:14px;font-size:.95rem}
+.rules div{background:var(--bg);border-radius:12px;padding:8px 12px;border-top:4px solid}
+.rules div:nth-child(1){border-color:var(--blue)} .rules div:nth-child(2){border-color:var(--yellow)} .rules div:nth-child(3){border-color:var(--green)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.draw,.popc,.bad{animation:none;stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<main>
+<section class="card" id="start">
+  <div class="chips"><span class="chip">👩‍🏫 المعلمة: <b>لطفيه الطلحي</b></span><span class="chip">🗓️ الحصة الثانية: <b>«أو»</b></span></div>
+  <h1>تدرّبي على رسم الجناحين</h1>
+  <p>خمسة تمارين ترسمين فيها حل المتباينة المركبة بنفسك: الدوائر ثم التظليل. في النهاية تظهر لكِ شهادة، صوّريها وأرسليها لمعلمتك.</p>
+  <label for="sname"><strong>اكتبي اسمك:</strong></label>
+  <input type="text" id="sname" autocomplete="off" placeholder="الاسم الثلاثي">
+  <div class="actions" style="justify-content:flex-start"><button class="btn primary" id="go">ابدئي التدريب</button></div>
+</section>
+
+<section class="card hidden" id="game">
+  <div class="chips"><span class="chip">👩‍🏫 المعلمة: <b>لطفيه الطلحي</b></span><span class="chip">🗓️ الحصة الثانية: <b>«أو»</b></span></div>
+  <h1>تدرّبي على رسم الجناحين</h1>
+  <div class="top"><span class="muted" id="count"></span><div class="progress" id="progress"></div></div>
+
+  <div class="task"><div class="lbl">مثّلي على خط الأعداد:</div><div class="ineq" id="ineq"></div></div>
+  <div class="guide" id="guide"></div>
+
+  <div class="tools" role="group" aria-label="أدوات الرسم">
+    <button class="tool" data-tool="closed" aria-pressed="false"><span class="ic">●</span>دائرة مغلقة</button>
+    <button class="tool" data-tool="open" aria-pressed="false"><span class="ic">○</span>دائرة مفتوحة</button>
+    <button class="tool" data-tool="shade" aria-pressed="false"><span class="ic">🖍️</span>تظليل</button>
+    <button class="tool" data-tool="erase" aria-pressed="false"><span class="ic">🧽</span>ممحاة</button>
+  </div>
+
+  <svg id="svg" viewBox="0 0 1000 150" direction="ltr" role="img" aria-label="خط الأعداد، اضغطي عليه للرسم"></svg>
+
+  <div class="actions">
+    <button class="btn primary" id="check">تحقّقي ✓</button>
+    <button class="btn" id="clear">امسحي الرسم</button>
+    <button class="btn go hidden" id="next">التمرين التالي</button>
+  </div>
+  <div class="fb" id="fb"></div>
+
+  <div class="rules">
+    <div><b>الدائرة:</b> ≤ أو ≥ ← مغلقة ●، و &lt; أو &gt; ← مفتوحة ○</div>
+    <div><b>العددان:</b> نضع دائرة عند كل عدد في المتباينة</div>
+    <div><b>«أو»:</b> نظلّل خارج الدائرتين: يسار الصغرى ويمين الكبرى، فيظهر جناحان 🕊️</div>
+  </div>
+</section>
+
+<section class="card end hidden" id="end">
+  <div class="chips" style="justify-content:center"><span class="chip">👩‍🏫 المعلمة: <b>لطفيه الطلحي</b></span></div>
+  <div class="stars" id="stars"></div>
+  <div style="font-size:2.4rem">🕊️</div><h1 style="text-align:center">أحسنتِ! أتقنتِ رسم الجناحين</h1>
+  <div class="cert">
+    <div class="muted">شهادة إتقان رسم الجناحين – المتباينات المركبة «أو»</div>
+    <div class="cname" id="certName"></div>
+    <p id="summary"></p>
+    <div class="muted" id="certDate"></div>
+    <div class="sign">المعلمة: <b>لطفيه الطلحي</b></div>
+  </div>
+  <p style="font-weight:700">📸 صوّري هذه الشهادة وأرسليها لمعلمتك.</p>
+  <p class="muted">تذكّري: في المتباينة المركبة التي تحوي «أو» يكون الحل جناحين متباعدين خارج الدائرتين.</p>
+  <div class="actions"><button class="btn primary" id="again">تدرّبي مرة أخرى</button></div>
+</section>
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const AD="٠١٢٣٤٥٦٧٨٩";
+const ad=n=>String(Math.abs(n)).replace(/\d/g,d=>AD[d]);
+const numVisual=n=>ad(n)+(n<0?"−":"");
+const MIRROR={"<":">",">":"<","≤":"≥","≥":"≤"};
+function M(t){return '<span class="m">'+t.slice().reverse().map(x=>{
+  if(x.n!==undefined)return '<span class="n">'+numVisual(x.n)+'</span>';
+  if(x.w)return '<span class="w">'+x.w+'</span>';
+  if(x.v)return '<span>س</span>';
+  return '<span>'+(MIRROR[x.s]||x.s)+'</span>';}).join("")+'</span>';}
+const S={v:1}, n=x=>({n:x}), s=x=>({s:x}), w=x=>({w:x});
+const opName=o=>o==="≤"||o==="≥"?"فيها «يساوي»":"ليس فيها «يساوي»";
+
+/* exercises: lo, loClosed, hi, hiClosed, display tokens, symbol at lo / hi */
+const EX=[
+ {lo:-2,lc:false,hi:3,hc:true, t:[S,s("<"),n(-2),w("أو"),S,s("≥"),n(3)], so:"<", sh:"≥"},
+ {lo:-4,lc:true,hi:1,hc:false, t:[S,s("≤"),n(-4),w("أو"),S,s(">"),n(1)], so:"≤", sh:">"},
+ {lo:0,lc:false,hi:4,hc:false, t:[S,s("<"),n(0),w("أو"),S,s(">"),n(4)], so:"<", sh:">"},
+ {lo:-1,lc:true,hi:2,hc:true, t:[S,s("≤"),n(-1),w("أو"),S,s("≥"),n(2)], so:"≤", sh:"≥"},
+ {lo:-3,lc:false,hi:5,hc:true, t:[S,s("<"),n(-3),w("أو"),S,s("≥"),n(5)], so:"<", sh:"≥"}
+];
+
+const MIN=-6,MAX=6,Y=62,xOf=v=>60+(v-MIN)*(880/(MAX-MIN)),STEP=880/(MAX-MIN);
+let ei=0, tool=null, circles=new Map(), shaded=new Set(), firstTry=[], attempts=0, lastShaded=null, lastCircle=null, solved=false;
+const svg=$("svg"), NS="http://www.w3.org/2000/svg";
+function el(tag,a,cls){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(cls)e.setAttribute("class",cls);return e;}
+
+function regions(){ // needs exactly two circles
+  if(circles.size!==2)return null;
+  const [a,b]=[...circles.keys()].sort((x,y)=>x-y);
+  return {L:[MIN-0.7,a],M:[a,b],R:[b,MAX+0.7],a,b};
+}
+function render(){
+  svg.innerHTML="";
+  svg.appendChild(el("line",{x1:xOf(MIN)-40,y1:Y,x2:xOf(MAX)+40,y2:Y},"axis"));
+  svg.appendChild(el("polygon",{points:`${xOf(MAX)+52},${Y} ${xOf(MAX)+36},${Y-9} ${xOf(MAX)+36},${Y+9}`,fill:"var(--ink)"}));
+  svg.appendChild(el("polygon",{points:`${xOf(MIN)-52},${Y} ${xOf(MIN)-36},${Y-9} ${xOf(MIN)-36},${Y+9}`,fill:"var(--ink)"}));
+  for(let v=MIN;v<=MAX;v++){
+    svg.appendChild(el("line",{x1:xOf(v),y1:Y-11,x2:xOf(v),y2:Y+11},"tick"));
+    const t=el("text",{x:xOf(v),y:Y+52,direction:"ltr","unicode-bidi":"bidi-override"},"num");t.textContent=numVisual(v);svg.appendChild(t);
+  }
+  const R=regions();
+  if(R){
+    ["L","M","R"].forEach(k=>{
+      if(!shaded.has(k))return;
+      const [p,q]=R[k];
+      const x1=xOf(Math.max(p,MIN-0.7)), x2=xOf(Math.min(q,MAX+0.7));
+      const anim=k===lastShaded, len=Math.abs(x2-x1);
+      const ln=el("line",{x1:k==="L"?x2:x1,y1:Y,x2:k==="L"?x1:x2,y2:Y,stroke:"var(--purple)","stroke-width":12},anim?"draw":"");
+      if(anim){ln.style.strokeDasharray=len;ln.style.setProperty("--len",len);ln.style.strokeDashoffset=len;}
+      svg.appendChild(ln);
+      if(k==="L")svg.appendChild(el("polygon",{points:`${x1-16},${Y} ${x1+2},${Y-13} ${x1+2},${Y+13}`,fill:"var(--purple)"}));
+      if(k==="R")svg.appendChild(el("polygon",{points:`${x2+16},${Y} ${x2-2},${Y-13} ${x2-2},${Y+13}`,fill:"var(--purple)"}));
+    });
+  }
+  circles.forEach((closed,v)=>{
+    svg.appendChild(el("circle",{cx:xOf(v),cy:Y,r:15,fill:closed?"var(--purple)":"var(--hollow)",stroke:"var(--purple)","stroke-width":5},v===lastCircle?"popc":""));
+  });
+  lastShaded=null;lastCircle=null;
+  updateGuide();
+}
+function updateGuide(){
+  const g=$("guide");
+  if(solved){g.textContent="رسمك صحيح! انتقلي للتمرين التالي.";return;}
+  if(circles.size<2)g.innerHTML="١) اختاري نوع الدائرة (● أو ○)، ثم اضغطي على العدد في خط الأعداد. ضعي دائرة عند كل عدد.";
+  else if(shaded.size===0)g.innerHTML="٢) اختاري أداة 🖍️ التظليل، ثم اضغطي على كل جزء يمثّل الحل.";
+  else g.innerHTML="٣) إذا انتهيتِ اضغطي «تحقّقي ✓».";
+}
+function svgX(evt){const pt=svg.createSVGPoint();pt.x=evt.clientX;pt.y=evt.clientY;return pt.matrixTransform(svg.getScreenCTM().inverse()).x;}
+svg.addEventListener("click",e=>{
+  if(solved)return;
+  const x=svgX(e);
+  const v=Math.round((x-60)/STEP)+MIN;
+  const nearTick=v>=MIN&&v<=MAX&&Math.abs(xOf(v)-x)<STEP*0.45;
+  if(!tool){$("guide").innerHTML="اختاري أداة أولًا من الأزرار فوق خط الأعداد 👆";return;}
+  hideFb();
+  if(tool==="open"||tool==="closed"){
+    if(!nearTick)return;
+    if(!circles.has(v)&&circles.size>=2){$("guide").innerHTML="عندك دائرتان بالفعل. استعملي 🧽 الممحاة لحذف دائرة، أو ضعي الدائرة فوق دائرة موجودة لتغيير نوعها.";return;}
+    circles.set(v,tool==="closed");lastCircle=v;shaded.clear();render();return;
+  }
+  if(tool==="erase"){
+    if(nearTick&&circles.has(v)){circles.delete(v);shaded.clear();render();return;}
+    const R=regions();if(!R)return;
+    const k=x<xOf(R.a)?"L":x>xOf(R.b)?"R":"M";shaded.delete(k);render();return;
+  }
+  if(tool==="shade"){
+    const R=regions();
+    if(!R){$("guide").innerHTML="ضعي الدائرتين أولًا، ثم ظلّلي 🙂";return;}
+    const k=x<xOf(R.a)?"L":x>xOf(R.b)?"R":"M";
+    if(shaded.has(k))shaded.delete(k);else{shaded.add(k);lastShaded=k;}
+    render();
+  }
+});
+document.querySelectorAll(".tool").forEach(b=>b.onclick=()=>{
+  tool=b.dataset.tool;
+  document.querySelectorAll(".tool").forEach(x=>x.setAttribute("aria-pressed",x===b));
+});
+function hideFb(){$("fb").className="fb";}
+function check(){
+  const ex=EX[ei], items=[]; let ok=true;
+  const hasLo=circles.has(ex.lo), hasHi=circles.has(ex.hi);
+  [[ex.lo,ex.lc,ex.so,hasLo],[ex.hi,ex.hc,ex.sh,hasHi]].forEach(([v,cl,sym,has])=>{
+    const N=M([n(v)]);
+    if(!has){ok=false;items.push(`✗ لا توجد دائرة عند ${N}. ضعي دائرة عند كل عدد في المتباينة.`);}
+    else if(circles.get(v)!==cl){ok=false;items.push(`✗ الدائرة عند ${N} يجب أن تكون <b>${cl?"مغلقة ●":"مفتوحة ○"}</b>، لأن الإشارة ${M([s(sym)])} ${opName(sym)}.`);}
+    else items.push(`✓ الدائرة عند ${N} ${cl?"مغلقة":"مفتوحة"}. أحسنتِ!`);
+  });
+  const extra=[...circles.keys()].filter(v=>v!==ex.lo&&v!==ex.hi);
+  if(extra.length){ok=false;items.push(`✗ وضعتِ دائرة عند ${extra.map(v=>M([n(v)])).join(" و ")}، وهذا العدد ليس في المتباينة.`);}
+  if(hasLo&&hasHi&&circles.size===2){
+    const wings=shaded.size===2&&shaded.has("L")&&shaded.has("R");
+    if(wings)items.push("✓ ظلّلتِ الجزأين خارج الدائرتين، فظهر الجناحان 🕊️.");
+    else{ok=false;
+      if(shaded.size===0)items.push("✗ لم تظلّلي أي جزء بعد. مع «أو» نظلّل خارج الدائرتين.");
+      else if(shaded.size===1&&shaded.has("M"))items.push("✗ ظلّلتِ بين الدائرتين (جسر). هذا شكل «و»، أما «أو» فنظلّل <b>خارج</b> الدائرتين: يسار الصغرى ويمين الكبرى.");
+      else if(shaded.has("M"))items.push("✗ ظلّلتِ أكثر من اللازم. الأعداد بين الدائرتين لا تحقق أيًّا من المتباينتين.");
+      else items.push("✗ ظلّلتِ جناحًا واحدًا فقط. مع «أو» يكفي تحقق شرط واحد، فكل عدد يحقق إحدى المتباينتين من الحل، فنظلّل <b>الجناحين</b> معًا.");
+    }
+  }else if(ok===false&&shaded.size===0){/* circles first */}
+  attempts++;
+  const fb=$("fb");
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"<strong>رسم صحيح، ممتازة! 🎉</strong>":"<strong>راجعي رسمك:</strong>")+"<ul>"+items.map(i=>"<li>"+i+"</li>").join("")+"</ul>";
+  if(ok){
+    solved=true;firstTry[ei]=attempts===1;
+    $("progress").children[ei].className=attempts===1?"ok":"retry";
+    $("next").classList.remove("hidden");$("check").classList.add("hidden");updateGuide();
+  }else{svg.classList.remove("bad");void svg.getBoundingClientRect();svg.classList.add("bad");}
+}
+function load(){
+  const ex=EX[ei];
+  circles=new Map();shaded=new Set();attempts=0;solved=false;
+  $("ineq").innerHTML=M(ex.t);
+  $("count").textContent=`التمرين ${ad(ei+1)} من ${ad(EX.length)}`;
+  [...$("progress").children].forEach((d,k)=>{if(k===ei)d.className="on";});
+  $("next").classList.add("hidden");$("check").classList.remove("hidden");hideFb();
+  $("next").textContent=ei<EX.length-1?"التمرين التالي":"عرض النتيجة";
+  render();
+}
+$("check").onclick=check;
+$("clear").onclick=()=>{if(solved)return;circles.clear();shaded.clear();hideFb();render();};
+$("next").onclick=()=>{
+  if(ei<EX.length-1){ei++;load();}
+  else{
+    $("game").classList.add("hidden");$("end").classList.remove("hidden");
+    const ft=firstTry.filter(Boolean).length;
+    $("stars").textContent=ft>=5?"★★★":ft>=3?"★★☆":"★☆☆";
+    $("summary").textContent=`رسمتِ ${ad(EX.length)} تمارين صحيحة، منها ${ad(ft)} من المحاولة الأولى.`;
+    $("certName").textContent=studentName;
+    $("certDate").textContent=new Date().toLocaleDateString("ar-SA",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  }
+};
+$("again").onclick=()=>{
+  $("end").classList.add("hidden");$("game").classList.remove("hidden");
+  ei=0;firstTry=[];$("progress").innerHTML=EX.map(()=>"<span></span>").join("");load();
+};
+let studentName="";
+$("go").onclick=()=>{
+  studentName=$("sname").value.trim();
+  if(!studentName){$("sname").focus();$("sname").placeholder="اكتبي اسمك أولًا";return;}
+  $("start").classList.add("hidden");$("game").classList.remove("hidden");
+  ei=0;firstTry=[];$("progress").innerHTML=EX.map(()=>"<span></span>").join("");load();
+};
+$("sname").addEventListener("keydown",e=>{if(e.key==="Enter")$("go").click();});
+</script>
+</body>
+</html>
