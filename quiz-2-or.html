@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تقويم الحصة الثانية – المتباينات المركبة «أو»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF2F6; --panel:#FFFFFF; --ink:#16324F; --muted:#5B7088; --line:#B5C4D3;
+  --blue:#2F6FDB; --yellow:#E2A812; --green:#1F9D5B; --greenSoft:#E3F5EC; --red:#C83E3E; --redSoft:#FBE9E9; --hollow:#FFFFFF; --coral:#E8605A; --purple:#7A5AF8;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+    --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --greenSoft:#173C2C; --red:#F07272; --redSoft:#3F2125; --hollow:#162A3D; --coral:#FF8A80; --purple:#A58BFF;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+  --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --greenSoft:#173C2C; --red:#F07272; --redSoft:#3F2125; --hollow:#162A3D; --coral:#FF8A80; --purple:#A58BFF;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Readex Pro",Tahoma,"Segoe UI",sans-serif;line-height:1.7}
+main{max-width:760px;margin:0 auto;padding:22px 16px 40px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px 20px}
+h1{font-size:clamp(1.6rem,5vw,2.2rem);margin:0 0 4px}
+h2{font-size:1.25rem;margin:0 0 6px}
+p{margin:.4em 0}
+.muted{color:var(--muted)}
+.m{display:inline-flex;direction:ltr;unicode-bidi:isolate;gap:.28em;align-items:baseline;white-space:nowrap}
+.m .n{direction:ltr;unicode-bidi:bidi-override}
+.m .w{direction:rtl;unicode-bidi:isolate}
+.big{font-size:clamp(1.45rem,5vw,1.9rem);font-weight:700;text-align:center;margin:14px 0 18px}
+input[type=text]{font:inherit;font-size:1.1rem;width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);margin:10px 0 14px}
+.btn{font:inherit;font-size:1.1rem;font-weight:700;border-radius:12px;padding:12px 26px;cursor:pointer;border:2px solid var(--ink);background:var(--ink);color:var(--panel)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.progress{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
+.progress span{width:38px;height:8px;border-radius:4px;background:var(--line)}
+.progress span.on{background:var(--ink)}
+.progress span.ok{background:var(--green)}
+.progress span.no{background:var(--red)}
+.tag{display:inline-block;font-size:.95rem;font-weight:700;padding:2px 12px;border-radius:999px;border:2px solid currentColor;margin-bottom:6px}
+.tag.and{color:var(--blue)} .tag.or{color:var(--yellow)} .tag.life{color:var(--green)}
+.options{display:grid;gap:10px}
+.opt{font:inherit;font-size:1.25rem;text-align:center;background:var(--bg);color:var(--ink);border:2px solid var(--line);border-radius:14px;padding:10px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--green);background:var(--greenSoft)}
+.opt.wrong{border-color:var(--red);background:var(--redSoft)}
+.opt svg{width:100%;max-width:420px;height:auto;display:block}
+.opt .letter{font-size:.9rem;color:var(--muted)}
+.feedback{margin-top:16px;border-radius:14px;padding:14px 16px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--greenSoft);border:1px solid var(--green)}
+.feedback.no{background:var(--redSoft);border:1px solid var(--red)}
+.feedback strong{font-size:1.15rem}
+.feedback ol{list-style-type:arabic-indic;margin:.4em 0 .2em;padding-inline-start:1.3em}
+.row{display:flex;justify-content:center;margin-top:16px;gap:10px;flex-wrap:wrap}
+.stars{font-size:3rem;text-align:center;letter-spacing:.15em;margin:8px 0}
+.score{text-align:center;font-size:1.4rem;font-weight:700}
+.cert{border:3px double var(--ink);border-radius:16px;padding:18px;text-align:center;margin-top:14px}
+.cert .name{font-size:1.6rem;font-weight:700;margin:4px 0}
+.ax{stroke:var(--ink);stroke-width:2}
+.nl{fill:var(--ink);font-size:15px;font-family:"Readex Pro",Tahoma,sans-serif;text-anchor:middle}
+.hidden{display:none}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){.pop{animation:pop .35s ease-out}}
+@keyframes pop{from{transform:scale(.96);opacity:.4}to{transform:none;opacity:1}}
+
+.card{position:relative;overflow:hidden;padding-top:30px}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,var(--blue) 0 25%,var(--yellow) 25% 50%,var(--green) 50% 75%,var(--coral) 75%)}
+.bgsym{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bgsym span{position:absolute;font-weight:700;opacity:.13;line-height:1}
+.teacher{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:.95rem;font-weight:500;padding:4px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chip b{color:var(--purple)}
+.hero{display:flex;justify-content:center;gap:clamp(8px,3vw,22px);font-size:clamp(1.8rem,8vw,3rem);font-weight:700;margin:6px 0 12px;direction:ltr}
+.hero span:nth-child(6n+1){color:var(--blue)} .hero span:nth-child(6n+2){color:var(--yellow)} .hero span:nth-child(6n+3){color:var(--green)}
+.hero span:nth-child(6n+4){color:var(--coral)} .hero span:nth-child(6n+5){color:var(--purple)} .hero span:nth-child(6n){color:var(--blue)}
+h1{background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.ghost{background:transparent;color:var(--blue)}
+.opt .letter{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1rem}
+.opt:nth-child(1) .letter{background:var(--blue)} .opt:nth-child(2) .letter{background:var(--yellow)}
+.opt:nth-child(3) .letter{background:var(--green)} .opt:nth-child(4) .letter{background:var(--coral)}
+.qhead{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.qhead .chip{font-size:.85rem}
+.big{background:var(--bg);border-radius:14px;padding:10px;border:2px dashed var(--purple)}
+.progress span.on{background:var(--purple)}
+.cert{border:4px solid transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(135deg,var(--blue),var(--yellow),var(--green),var(--coral),var(--purple)) border-box;position:relative}
+.cert .corner{position:absolute;font-size:1.6rem;font-weight:700;line-height:1}
+.cert .c1{top:8px;right:12px;color:var(--blue)} .cert .c2{top:8px;left:12px;color:var(--coral)}
+.cert .c3{bottom:8px;right:12px;color:var(--green)} .cert .c4{bottom:8px;left:12px;color:var(--yellow)}
+.cert .sign{margin-top:12px;padding-top:8px;border-top:1px dashed var(--line);font-weight:500}
+.cert .sign b{color:var(--purple)}
+.stars{color:var(--yellow)}
+</style>
+</head>
+<body>
+<div class="bgsym" id="bgsym" aria-hidden="true"></div>
+<main>
+
+<section id="start" class="card">
+  <div class="teacher"><span class="chip">👩‍🏫 المعلمة: <b>لطفيه الطلحي</b></span><span class="chip">📐 رياضيات – الصف الثالث المتوسط</span><span class="chip">🗓️ الحصة الثانية: <b>«أو»</b></span></div>
+  <div class="hero" aria-hidden="true"><span>&lt;</span><span>≤</span><span>∩</span><span>∪</span><span>≥</span><span>&gt;</span></div>
+  <h1>تحدي الجسر والجناحين</h1>
+  <p class="muted">تقويم ختامي لـالحصة الثانية من درس حل المتباينات المركبة: ثلاثة أسئلة عن المتباينات التي تحوي «أو».</p>
+  <p>بعد كل إجابة يظهر لكِ الحل خطوة بخطوة. في النهاية صوّري شهادتك وأرسليها لمعلمتك.</p>
+  <label for="name"><strong>اكتبي اسمك:</strong></label>
+  <input type="text" id="name" autocomplete="off" placeholder="الاسم الثلاثي">
+  <div class="row" style="justify-content:flex-start"><button class="btn" id="go">ابدئي التحدي</button></div>
+</section>
+
+<section id="quiz" class="card hidden">
+  <div class="progress" id="progress"><span></span><span></span><span></span></div>
+  <div id="qbox"></div>
+  <div class="feedback" id="fb"></div>
+  <div class="row"><button class="btn hidden" id="nextBtn">السؤال التالي</button></div>
+</section>
+
+<section id="end" class="card hidden pop">
+  <div class="stars" id="stars"></div>
+  <div class="score" id="score"></div>
+  <p class="muted" style="text-align:center" id="msg"></p>
+  <div class="cert">
+    <span class="corner c1">≤</span><span class="corner c2">∪</span><span class="corner c3">∩</span><span class="corner c4">≥</span>
+    <div class="muted">شهادة إنجاز – حل المتباينات المركبة (الحصة الثانية: «أو»)</div>
+    <div class="name" id="certName"></div>
+    <div id="certScore"></div>
+    <div class="muted" id="certDate"></div>
+    <div class="sign">المعلمة: <b>لطفيه الطلحي</b></div>
+  </div>
+  <p style="text-align:center;margin-top:12px">صوّري هذه الشاشة وأرسليها لمعلمتك.</p>
+  <div class="row"><button class="btn ghost" id="again">إعادة المحاولة</button></div>
+</section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const AD="٠١٢٣٤٥٦٧٨٩";
+const ad=n=>String(Math.abs(n)).replace(/\d/g,d=>AD[d]);
+const numVisual=n=>ad(n)+(n<0?"−":"");
+const MIRROR={"<":">",">":"<","≤":"≥","≥":"≤","{":"}","}":"{"};
+function M(tokens){
+  return '<span class="m">'+tokens.slice().reverse().map(t=>{
+    if(t.n!==undefined)return '<span class="n">'+numVisual(t.n)+'</span>';
+    if(t.k!==undefined)return '<span class="n">س'+numVisual(t.k)+'</span>';
+    if(t.w)return '<span class="w">'+t.w+'</span>';
+    if(t.v)return '<span>س</span>';
+    return '<span>'+(MIRROR[t.s]||t.s)+'</span>';
+  }).join("")+'</span>';
+}
+const S={v:1}, k=x=>({k:x}), n=x=>({n:x}), s=x=>({s:x}), w=x=>({w:x});
+const setOf=parts=>M([s("{"),S,s("|"),...parts,s("}")]);
+
+/* mini number line: pieces = [{lo,loI,hi,hiI}] with ±Infinity */
+const NS="http://www.w3.org/2000/svg";
+function numberLine(pieces,min=-7,max=7){
+  const W=420,xOf=v=>20+(v-min)*(W-40)/(max-min),Y=26;
+  let h=`<svg viewBox="0 0 ${W} 58" xmlns="${NS}" direction="ltr" aria-hidden="true">`;
+  h+=`<line class="ax" x1="8" y1="${Y}" x2="${W-8}" y2="${Y}"/>`;
+  for(let v=min;v<=max;v++){
+    h+=`<line class="ax" x1="${xOf(v)}" y1="${Y-5}" x2="${xOf(v)}" y2="${Y+5}"/>`;
+    h+=`<text class="nl" x="${xOf(v)}" y="${Y+26}" direction="ltr" unicode-bidi="bidi-override">${numVisual(v)}</text>`;
+  }
+  pieces.forEach(p=>{
+    const a=p.lo===-Infinity?8:xOf(p.lo), b=p.hi===Infinity?W-8:xOf(p.hi);
+    h+=`<line x1="${a}" y1="${Y}" x2="${b}" y2="${Y}" stroke="var(--blue)" stroke-width="7"/>`;
+    if(p.lo===-Infinity)h+=`<polygon points="2,${Y} 14,${Y-9} 14,${Y+9}" fill="var(--blue)"/>`;
+    else h+=`<circle cx="${a}" cy="${Y}" r="7" fill="${p.loI?'var(--blue)':'var(--hollow)'}" stroke="var(--blue)" stroke-width="3"/>`;
+    if(p.hi===Infinity)h+=`<polygon points="${W-2},${Y} ${W-14},${Y-9} ${W-14},${Y+9}" fill="var(--blue)"/>`;
+    else h+=`<circle cx="${b}" cy="${Y}" r="7" fill="${p.hiI?'var(--blue)':'var(--hollow)'}" stroke="var(--blue)" stroke-width="3"/>`;
+  });
+  return h+"</svg>";
+}
+const I=(lo,loI,hi,hiI)=>({lo,loI,hi,hiI}), INF=Infinity;
+
+const QUESTIONS=[
+{
+  tag:'<span class="tag or">الفكرة ١: تمثيل حل متباينة «أو» على خط الأعداد</span>',
+  prompt:"أيّ تمثيل على خط الأعداد يمثل حل المتباينة المركبة:",
+  expr:M([k(2),s("−"),n(1),s("<"),n(-7),w("أو"),S,s("+"),n(3),s("≥"),n(5)]),
+  options:[
+    {html:numberLine([I(-INF,false,-3,false),I(2,true,INF,false)]),ok:true},
+    {html:numberLine([I(-3,false,2,true)]),why:"هذا «جسر» خاص بـ «و». مع «أو» يكفي تحقق شرط واحد، فيكون التمثيل «جناحين»."},
+    {html:numberLine([I(-INF,false,-3,true),I(2,false,INF,false)]),why:"انتبهي لنوع الدائرة: < تعني دائرة مفتوحة، و ≥ تعني دائرة مغلقة."},
+    {html:numberLine([I(-INF,false,-4,false),I(2,true,INF,false)]),why:"راجعي الخطوة الأولى: نضيف ١ للطرفين ثم نقسم على ٢."}
+  ],
+  steps:[
+    "الأولى: نضيف ١ للطرفين: "+M([k(2),s("<"),n(-6)])+"، ثم نقسم على ٢: "+M([S,s("<"),n(-3)]),
+    "الثانية: نطرح ٣ من الطرفين: "+M([S,s("≥"),n(2)]),
+    "التمثيل: دائرة مفتوحة عند "+M([n(-3)])+" وسهم لليسار، ودائرة مغلقة عند "+M([n(2)])+" وسهم لليمين (جناحان)."
+  ]
+},
+{
+  tag:'<span class="tag and">الفكرة ٢: «أو» مع القسمة على عدد سالب</span>',
+  prompt:"ما مجموعة حل المتباينة المركبة:",
+  expr:M([k(-3),s("≥"),n(12),w("أو"),k(2),s("+"),n(1),s(">"),n(9)]),
+  options:[
+    {html:setOf([S,s("≤"),n(-4),w("أو"),S,s(">"),n(4)]),ok:true},
+    {html:setOf([S,s("≥"),n(-4),w("أو"),S,s(">"),n(4)]),why:"عند القسمة على "+M([n(-3)])+" يجب قلب إشارة المتباينة، فتصبح "+M([S,s("≤"),n(-4)])+"."},
+    {html:setOf([n(-4),s("≤"),S,s("<"),n(4)]),why:"هذه صيغة «و» (جسر)، أما «أو» فحلها جزآن منفصلان."},
+    {html:setOf([S,s("≤"),n(-4),w("أو"),S,s(">"),n(5)]),why:"في المتباينة الثانية نطرح ١ من الطرفين أولًا، ثم نقسم على ٢."}
+  ],
+  steps:[
+    "الأولى: نقسم على "+M([n(-3)])+" ونقلب الإشارة: "+M([S,s("≤"),n(-4)]),
+    "الثانية: نطرح ١: "+M([k(2),s(">"),n(8)])+"، ثم نقسم على ٢: "+M([S,s(">"),n(4)]),
+    "مع «أو» نأخذ اتحاد الحلين: "+setOf([S,s("≤"),n(-4),w("أو"),S,s(">"),n(4)])
+  ]
+},
+{
+  tag:'<span class="tag life">الفكرة ٣: كتابة متباينة «أو» من موقف حياتي</span>',
+  prompt:"تُطلق الساعة الذكية تنبيهًا إذا كان نبض القلب <strong>أقل من ٥٠</strong> نبضة في الدقيقة <strong>أو أكثر من ١٢٠</strong> نبضة. إذا كان س يمثل عدد النبضات، فأيّ متباينة تصف حالات ظهور التنبيه؟",
+  expr:"",
+  options:[
+    {html:M([S,s("<"),n(50),w("أو"),S,s(">"),n(120)]),ok:true},
+    {html:M([n(50),s("<"),S,s("<"),n(120)]),why:"هذا هو النبض الطبيعي الذي لا يظهر معه تنبيه."},
+    {html:M([S,s("<"),n(50),w("و"),S,s(">"),n(120)]),why:"لا يمكن أن يكون النبض أقل من ٥٠ وأكثر من ١٢٠ معًا! يكفي شرط واحد، فنستعمل «أو»."},
+    {html:M([S,s("≤"),n(50),w("أو"),S,s("≥"),n(120)]),why:"«أقل من ٥٠» لا تشمل ٥٠ نفسها، و«أكثر من ١٢٠» لا تشمل ١٢٠."}
+  ],
+  steps:[
+    "«أقل من ٥٠» تعني: "+M([S,s("<"),n(50)]),
+    "«أكثر من ١٢٠» تعني: "+M([S,s(">"),n(120)]),
+    "يكفي تحقق أحد الشرطين ليظهر التنبيه (أو): "+M([S,s("<"),n(50),w("أو"),S,s(">"),n(120)])
+  ]
+}];
+
+(function(){
+  const sy=["<",">","≤","≥","∩","∪","∅","س","+","−","÷","×","="],cols=["var(--blue)","var(--yellow)","var(--green)","var(--coral)","var(--purple)"];
+  let h="";for(let i=0;i<34;i++){const x=(i*37)%100,y=(i*53+11)%100,sz=22+(i*7)%36,r=((i*29)%50)-25;
+    h+=`<span style="left:${x}%;top:${y}%;font-size:${sz}px;color:${cols[i%5]};transform:rotate(${r}deg)">${sy[i%sy.length]}</span>`;}
+  document.getElementById("bgsym").innerHTML=h;
+})();
+let qi=0, results=[], studentName="";
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const LETTERS=["أ","ب","ج","د"];
+
+function showQuestion(){
+  const q=QUESTIONS[qi];
+  const opts=shuffle(q.options.slice());
+  $("qbox").innerHTML=`<div class="qhead">${q.tag}<span class="chip">المعلمة: <b>لطفيه الطلحي</b></span></div><h2>السؤال ${["الأول","الثاني","الثالث"][qi]}</h2><p>${q.prompt}</p>${q.expr?`<div class="big">${q.expr}</div>`:""}<div class="options" id="opts"></div>`;
+  opts.forEach((o,k)=>{
+    const b=document.createElement("button");
+    b.className="opt";if(o.ok)b.dataset.ok="1";
+    b.innerHTML=`<span class="letter">${LETTERS[k]}</span>${o.html}`;
+    b.onclick=()=>answer(o,b);
+    $("opts").appendChild(b);
+  });
+  $("fb").className="feedback";$("fb").innerHTML="";
+  $("nextBtn").classList.add("hidden");
+  [...$("progress").children].forEach((d,k)=>{d.className=k<qi?(results[k]?"ok":"no"):k===qi?"on":"";});
+  $("qbox").classList.remove("pop");void $("qbox").offsetWidth;$("qbox").classList.add("pop");
+}
+function answer(o,btn){
+  const btns=[...document.querySelectorAll(".opt")];
+  btns.forEach(b=>b.disabled=true);
+  const q=QUESTIONS[qi];
+  btns.find(b=>b.dataset.ok).classList.add("right");
+  results[qi]=!!o.ok;
+  if(!o.ok)btn.classList.add("wrong");
+  const head=o.ok?"<strong>إجابة صحيحة، أحسنتِ!</strong>":"<strong>إجابة غير صحيحة.</strong><p>"+o.why+"</p>";
+  $("fb").className="feedback show "+(o.ok?"ok":"no");
+  $("fb").innerHTML=head+"<p><strong>الحل خطوة بخطوة:</strong></p><ol>"+q.steps.map(x=>"<li>"+x+"</li>").join("")+"</ol>";
+  $("progress").children[qi].className=o.ok?"ok":"no";
+  $("nextBtn").textContent=qi<2?"السؤال التالي":"عرض النتيجة";
+  $("nextBtn").classList.remove("hidden");
+  $("nextBtn").focus();
+}
+function showEnd(){
+  $("quiz").classList.add("hidden");$("end").classList.remove("hidden");
+  const sc=results.filter(Boolean).length;
+  $("stars").textContent="★".repeat(sc)+"☆".repeat(3-sc);
+  $("score").textContent=`نتيجتك: ${ad(sc)} من ${ad(3)}`;
+  $("msg").textContent=sc===3?"ممتازة! أتقنتِ المتباينات المركبة التي تحوي «أو».":sc===2?"أداء جميل! راجعي السؤال الذي أخطأتِ فيه.":"لا بأس، راجعي خطوات الحل ثم أعيدي المحاولة.";
+  $("certName").textContent=studentName||"طالبة متميزة";
+  $("certScore").textContent=`الدرجة: ${ad(sc)} / ${ad(3)}`;
+  $("certDate").textContent=new Date().toLocaleDateString("ar-SA",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+}
+$("go").onclick=()=>{
+  studentName=$("name").value.trim();
+  if(!studentName){$("name").focus();$("name").placeholder="اكتبي اسمك أولًا";return;}
+  $("start").classList.add("hidden");$("quiz").classList.remove("hidden");qi=0;results=[];showQuestion();
+};
+$("name").addEventListener("keydown",e=>{if(e.key==="Enter")$("go").click();});
+$("nextBtn").onclick=()=>{if(qi<2){qi++;showQuestion();}else showEnd();};
+$("again").onclick=()=>{$("end").classList.add("hidden");$("quiz").classList.remove("hidden");qi=0;results=[];showQuestion();};
+</script>
+</body>
+</html>
