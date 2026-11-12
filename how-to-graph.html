@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>كيف أمثّل المتباينة المركبة؟ خطوة بخطوة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF2F6; --panel:#FFFFFF; --ink:#16324F; --muted:#5B7088; --line:#B5C4D3;
+  --blue:#2F6FDB; --yellow:#E2A812; --green:#1F9D5B; --red:#C83E3E; --coral:#E8605A; --purple:#7A5AF8; --purpleSoft:#EEEAFE;
+  --hollow:#FFFFFF; --hl:#FFE9A8;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+    --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --red:#F07272; --coral:#FF8A80; --purple:#A58BFF; --purpleSoft:#2A2550;
+    --hollow:#162A3D; --hl:#5A4A12; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1E2C; --panel:#162A3D; --ink:#E6EEF6; --muted:#9DB0C4; --line:#3D5670;
+  --blue:#6FA1FF; --yellow:#F5C443; --green:#45C985; --red:#F07272; --coral:#FF8A80; --purple:#A58BFF; --purpleSoft:#2A2550;
+  --hollow:#162A3D; --hl:#5A4A12; color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Readex Pro",Tahoma,"Segoe UI",sans-serif;line-height:1.7}
+main{max-width:1050px;margin:0 auto;padding:20px 16px 40px}
+.card{position:relative;overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px 18px 18px}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:8px;background:linear-gradient(90deg,var(--blue) 0 25%,var(--yellow) 25% 50%,var(--green) 50% 75%,var(--coral) 75%)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{display:inline-flex;gap:6px;font-size:.92rem;font-weight:500;padding:4px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.chip b{color:var(--purple)}
+h1{font-size:clamp(1.5rem,4.5vw,2.2rem);margin:0;background:linear-gradient(90deg,var(--blue),var(--purple));-webkit-background-clip:text;background-clip:text;color:transparent}
+.m{display:inline-flex;direction:ltr;unicode-bidi:isolate;gap:.3em;align-items:baseline;white-space:nowrap}
+.m .n{direction:ltr;unicode-bidi:bidi-override}
+.m .w{direction:rtl;unicode-bidi:isolate}
+.m .on{background:var(--hl);border-radius:8px;padding:0 .15em;box-shadow:0 0 0 3px var(--hl)}
+.exs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0 0}
+.exs button{font:inherit;font-size:1rem;font-weight:700;padding:6px 16px;border-radius:999px;border:2px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+.exs button.orb{border-color:var(--yellow)}
+.exs button[aria-pressed="true"]{background:var(--purple);border-color:var(--purple);color:#fff}
+.ineq{text-align:center;font-size:clamp(2rem,6vw,3rem);font-weight:700;margin:10px 0 0}
+.means{text-align:center;color:var(--muted);font-size:1.05rem}
+.stage-wrap{overflow-x:auto;margin-top:6px}
+svg{display:block;width:100%;min-width:620px;height:auto}
+.axis{stroke:var(--ink);stroke-width:3}
+.tick{stroke:var(--ink);stroke-width:2}
+.num{fill:var(--ink);font-size:20px;font-family:"Readex Pro",Tahoma,sans-serif;text-anchor:middle}
+.draw{animation:draw 1.3s ease-in-out forwards}
+@keyframes draw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+.fadein{animation:fadein .5s ease-out both}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.pulse{animation:pulse 1.2s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.35);opacity:.35}}
+.fillLate{animation:fillin .5s ease-out 1.1s both}
+@keyframes fillin{from{fill:var(--hollow)}}
+.pencil{transition:transform 1.2s ease-in-out;pointer-events:none}
+.caption{display:flex;gap:14px;align-items:flex-start;background:var(--purpleSoft);border-radius:16px;padding:14px 16px;margin-top:8px;min-height:120px}
+.badge{flex:none;width:52px;height:52px;border-radius:50%;background:var(--purple);color:#fff;font-size:1.5rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.caption h2{margin:0 0 4px;font-size:1.3rem}
+.caption p{margin:0;font-size:1.12rem}
+.steps{display:flex;gap:6px;justify-content:center;margin:14px 0 4px;flex-wrap:wrap}
+.steps button{width:34px;height:10px;border-radius:5px;border:0;background:var(--line);cursor:pointer;padding:0}
+.steps button.done{background:var(--purple)} .steps button.now{background:var(--coral)}
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px}
+.btn{font:inherit;font-size:1.05rem;font-weight:700;border-radius:12px;padding:10px 22px;cursor:pointer;border:2px solid var(--blue);background:transparent;color:var(--blue)}
+.btn.primary{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.4;cursor:default}
+.rules{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.rule{background:var(--bg);border-radius:14px;padding:12px 14px;border-top:5px solid}
+.rule h3{margin:0 0 6px;font-size:1.05rem}
+.rule p{margin:2px 0}
+.r1{border-color:var(--blue)} .r2{border-color:var(--yellow)} .r3{border-color:var(--green)}
+.sym{font-size:1.3rem;font-weight:700}
+.hint{color:var(--muted);text-align:center;font-size:.92rem;margin-top:8px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.draw,.fadein,.fillLate,.pulse{animation:none;stroke-dashoffset:0;opacity:1}.pencil{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<section class="card">
+  <div class="chips"><span class="chip">👩‍🏫 المعلمة: <b>لطفيه الطلحي</b></span><span class="chip">📐 رياضيات – الصف الثالث المتوسط</span></div>
+  <h1>كيف أمثّل المتباينة المركبة على خط الأعداد؟</h1>
+  <div class="exs" id="exs" role="group" aria-label="اختيار المثال"></div>
+  <div class="ineq" id="ineq"></div>
+  <div class="means" id="means"></div>
+
+  <div class="stage-wrap"><svg id="svg" viewBox="0 0 1000 270" direction="ltr" role="img" aria-label="خط الأعداد"></svg></div>
+
+  <div class="caption" aria-live="polite"><div class="badge" id="badge"></div><div><h2 id="ctitle"></h2><p id="ctext"></p></div></div>
+
+  <div class="steps" id="steps"></div>
+  <div class="controls">
+    <button class="btn" id="prev">السابق</button>
+    <button class="btn primary" id="next">التالي</button>
+    <button class="btn" id="play">▶ تشغيل كالفيديو</button>
+    <button class="btn" id="reset">من البداية</button>
+  </div>
+  <p class="hint">المسافة أو السهم الأيسر: التالي، والسهم الأيمن: السابق</p>
+
+  <div class="rules">
+    <div class="rule r1"><h3>١) نوع الدائرة</h3>
+      <p><span class="sym">≤ ، ≥</span> فيها خط «يساوي» ← دائرة <b>مغلقة</b> ●</p>
+      <p><span class="sym">&lt; ، &gt;</span> بدون «يساوي» ← دائرة <b>مفتوحة</b> ○</p></div>
+    <div class="rule r2"><h3>٢) الاتجاه</h3>
+      <p id="dirRule1"></p><p id="dirRule2"></p></div>
+    <div class="rule r3"><h3>٣) التظليل</h3>
+      <p>«و» ← الجزء <b>المشترك</b> فقط (جسر 🌉)</p>
+      <p>«أو» ← <b>كل</b> ما ظُلّل (جناحان 🕊️)</p></div>
+  </div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const AD="٠١٢٣٤٥٦٧٨٩";
+const ad=n=>String(Math.abs(n)).replace(/\d/g,d=>AD[d]);
+const numVisual=n=>ad(n)+(n<0?"−":"");
+const MIRROR={"<":">",">":"<","≤":"≥","≥":"≤"};
+// tokens in reading order; hl = set of token indices to highlight
+function M(t,hl=[]){
+  const parts=t.map((x,i)=>{
+    let h;
+    if(x.n!==undefined)h='<span class="n">'+numVisual(x.n)+'</span>';
+    else if(x.w)h='<span class="w">'+x.w+'</span>';
+    else if(x.v)h='<span>س</span>';
+    else h='<span>'+(MIRROR[x.s]||x.s)+'</span>';
+    return hl.includes(i)?h.replace('<span','<span data-on="1"'):h;
+  });
+  return '<span class="m">'+parts.reverse().join("").replace(/<span data-on="1"( class="(\w+)")?>/g,(m,a,c)=>'<span class="'+(c?c+' ':'')+'on">')+'</span>';
+}
+const S={v:1}, n=x=>({n:x}), s=x=>({s:x}), w=x=>({w:x});
+
+/* examples (all «و») */
+const EXS=[
+ {L:-2,lc:true, R:3, rc:false},
+ {L:-4,lc:false,R:1, rc:true},
+ {L:0, lc:true, R:5, rc:true},
+ {L:-5,lc:false,R:-1,rc:false},
+ {or:true,L:-2,lc:false,R:3,rc:true},
+ {or:true,L:-3,lc:true, R:1,rc:false},
+ {or:true,L:0, lc:false,R:4,rc:false}
+];
+let EX, L, R, MAIN, P1, P2, STEPS, MID, OUT;
+$("dirRule1").innerHTML=M([S,s(">")])+" أو "+M([S,s("≥")])+": الأعداد الأكبر، نحو <b>اليمين</b> ➡️";
+$("dirRule2").innerHTML=M([S,s("<")])+" أو "+M([S,s("≤")])+": الأعداد الأصغر، نحو <b>اليسار</b> ⬅️";
+
+const MIN=-6, MAX=6, Y=170, xOf=v=>80+(v-MIN)*70;
+const NS="http://www.w3.org/2000/svg";
+const NV=v=>"<span class='m'><span class='n'>"+numVisual(v)+"</span></span>";
+const circleText=(v,closed,sym)=>"الإشارة عند "+M([n(v)])+" هي "+M([s(sym)])+(closed
+  ? "، وفيها خط «يساوي». إذن "+M([n(v)])+" من ضمن الحل، فنرسم <b>دائرة مغلقة</b> ●: نرسم الدائرة ثم نلوّنها من الداخل."
+  : "، وليس فيها «يساوي». إذن "+M([n(v)])+" ليس من الحل، فنرسم <b>دائرة مفتوحة</b> ○ ونتركها فارغة.");
+
+
+function setOr(k){
+  const o1=EX.lc?"≤":"<", o2=EX.rc?"≥":">";
+  MAIN=[S,s(o1),n(L),w("أو"),S,s(o2),n(R)];
+  P1=[S,s(o1),n(L)]; P2=[S,s(o2),n(R)];
+  MID=L-2>=MIN?L-2:R+2;                      // a number inside a wing
+  OUT=Math.round((L+R)/2); if(OUT===L)OUT++; if(OUT===R)OUT--;   // a number between the circles
+  const inStmt=MID<L?M([n(MID),s(o1),n(L)]):M([n(MID),s(o2),n(R)]);
+  STEPS=[
+   {t:"نقرأ المتباينة أولًا",
+    x:"متباينتان بينهما «<b>أو</b>»: "+M(P1)+" أو "+M(P2)+". يكفي أن يتحقق <b>شرط واحد</b> منهما. سنمثّلها في ثماني خطوات.",
+    hl:[], pen:[xOf(0),60]},
+   {t:"نرسم خط الأعداد",
+    x:"نرسم خطًا مستقيمًا ونضع عليه الأعداد بمسافات متساوية: السالبة يسار الصفر، والموجبة يمينه.",
+    hl:[], pen:[xOf(MAX)+30,Y], from:[xOf(MIN)-30,Y]},
+   {t:"نحدّد العددين على الخط",
+    x:"العددان في المتباينتين هما "+M([n(L)])+" و "+M([n(R)])+". نبحث عنهما على خط الأعداد ونضع عندهما علامة.",
+    hl:[2,6], pen:[xOf(R),Y]},
+   {t:"الدائرة الأولى عند "+NV(L), x:circleText(L,EX.lc,o1), hl:[1,2], pen:[xOf(L),Y]},
+   {t:"الدائرة الثانية عند "+NV(R), x:circleText(R,EX.rc,o2), hl:[5,6], pen:[xOf(R),Y]},
+   {t:"اتجاه المتباينة الأولى",
+    x:M(P1)+" تعني الأعداد <b>الأصغر</b> من "+M([n(L)])+"، والأعداد الأصغر تقع <b>يسارها</b>. نرسم سهمًا مؤقتًا بالأزرق نحو اليسار.",
+    hl:[0,1,2], pen:[xOf(MIN)-10,105], from:[xOf(L),105]},
+   {t:"اتجاه المتباينة الثانية",
+    x:M(P2)+" تعني الأعداد <b>الأكبر</b> من "+M([n(R)])+"، والأعداد الأكبر تقع <b>يمينها</b>. نرسم سهمًا مؤقتًا بالأصفر نحو اليمين.",
+    hl:[4,5,6], pen:[xOf(MAX)+10,70], from:[xOf(R),70]},
+   {t:"«أو»: نظلّل الجزأين",
+    x:"الرابط «أو» يكفيه تحقق شرط واحد، فنأخذ <b>كل</b> ما تحت السهمين: يسار "+M([n(L)])+" ويمين "+M([n(R)])+". نظلّلهما على الخط، فيظهر «الجناحان» 🕊️. والأعداد بينهما لا تُظلَّل.",
+    hl:[0,1,2,3,4,5,6], pen:[xOf(MAX)+20,Y], from:[xOf(R),Y]},
+   {t:"نتحقق من الرسم",
+    x:"نختار عددًا من أحد الجناحين مثل "+M([n(MID)])+": "+inStmt+" صحيحة، فيكفي ✓. ونختار عددًا بين الدائرتين مثل "+M([n(OUT)])+": لا يحقق "+M(P1)+" ولا "+M(P2)+" ✗. إذن رسمنا صحيح!",
+    hl:[], pen:[xOf(MID),Y-40]}
+  ];
+  [...$("exs").children].forEach((b,i)=>b.setAttribute("aria-pressed",i===k));
+}
+
+function setEx(k){
+  EX=EXS[k]; L=EX.L; R=EX.R;
+  if(EX.or){setOr(k);return;}
+  const oL=EX.lc?"≤":"<", oR=EX.rc?"≤":"<";
+  MAIN=[n(L),s(oL),S,s(oR),n(R)];
+  P1=[S,s(EX.lc?"≥":">"),n(L)]; P2=[S,s(oR),n(R)];
+  MID=Math.round((L+R)/2); if(MID===L)MID++; if(MID===R)MID--;
+  OUT=R+2<=MAX?R+2:L-2;
+  const outStmt=OUT>R?M([n(OUT),s(oR),n(R)]):M([n(L),s(oL),n(OUT)]);
+  STEPS=[
+   {t:"نقرأ المتباينة أولًا",
+    x:"المتباينة "+M(MAIN)+" مكتوبة بالصيغة المختصرة، وتعني متباينتين معًا: "+M(P1)+" <b>و</b> "+M(P2)+". سنمثّلها في ثماني خطوات.",
+    hl:[], pen:[xOf(0),60]},
+   {t:"نرسم خط الأعداد",
+    x:"نرسم خطًا مستقيمًا ونضع عليه الأعداد بمسافات متساوية: السالبة يسار الصفر، والموجبة يمينه.",
+    hl:[], pen:[xOf(MAX)+30,Y], from:[xOf(MIN)-30,Y]},
+   {t:"نحدّد العددين على الخط",
+    x:"العددان في المتباينة هما "+M([n(L)])+" و "+M([n(R)])+". نبحث عنهما على خط الأعداد ونضع عندهما علامة.",
+    hl:[0,4], pen:[xOf(R),Y]},
+   {t:"الدائرة الأولى عند "+NV(L), x:circleText(L,EX.lc,oL), hl:[0,1], pen:[xOf(L),Y]},
+   {t:"الدائرة الثانية عند "+NV(R), x:circleText(R,EX.rc,oR), hl:[3,4], pen:[xOf(R),Y]},
+   {t:"اتجاه المتباينة الأولى",
+    x:M(P1)+" تعني الأعداد <b>الأكبر</b> من "+M([n(L)])+"، والأعداد الأكبر تقع <b>يمينها</b>. نرسم سهمًا مؤقتًا بالأزرق نحو اليمين.",
+    hl:[0,1,2], pen:[xOf(MAX)+10,105], from:[xOf(L),105]},
+   {t:"اتجاه المتباينة الثانية",
+    x:M(P2)+" تعني الأعداد <b>الأصغر</b> من "+M([n(R)])+"، والأعداد الأصغر تقع <b>يسارها</b>. نرسم سهمًا مؤقتًا بالأصفر نحو اليسار.",
+    hl:[2,3,4], pen:[xOf(MIN)-10,70], from:[xOf(R),70]},
+   {t:"«و»: نظلّل الجزء المشترك",
+    x:"الرابط «و» يعني أن الشرطين يتحققان معًا، فنأخذ فقط المنطقة التي يلتقي فيها السهمان: من "+M([n(L)])+" إلى "+M([n(R)])+". نظلّلها على الخط، فيظهر «الجسر» 🌉.",
+    hl:[0,1,2,3,4], pen:[xOf(R),Y], from:[xOf(L),Y]},
+   {t:"نتحقق من الرسم",
+    x:"نختار عددًا من المنطقة المظلّلة مثل "+M([n(MID)])+": "+M([n(L),s(oL),n(MID),s(oR),n(R)])+" صحيحة ✓. ونختار عددًا خارجها مثل "+M([n(OUT)])+": "+outStmt+" خاطئة ✗. إذن رسمنا صحيح!",
+    hl:[], pen:[xOf(MID),Y-40]}
+  ];
+  [...$("exs").children].forEach((b,i)=>b.setAttribute("aria-pressed",i===k));
+}
+
+let step=0,timer=null;
+const svg=$("svg");
+function el(tag,a,cls){const e=document.createElementNS(NS,tag);for(const k in a)e.setAttribute(k,a[k]);if(cls)e.setAttribute("class",cls);return e;}
+function drawLine(x1,y1,x2,y2,color,width,anim){
+  const len=Math.hypot(x2-x1,y2-y1);
+  const ln=el("line",{x1,y1,x2,y2,stroke:color,"stroke-width":width,"stroke-linecap":"round"},anim?"draw":"");
+  if(anim){ln.style.strokeDasharray=len;ln.style.setProperty("--len",len);ln.style.strokeDashoffset=len;}
+  return ln;
+}
+function arrowHead(x,y,dir,color,cls){
+  const s=14;return el("polygon",{points:dir>0?`${x+s},${y} ${x-2},${y-s} ${x-2},${y+s}`:`${x-s},${y} ${x+2},${y-s} ${x+2},${y+s}`,fill:color},cls);
+}
+function circle(v,closed,anim){
+  const g=el("g");
+  const c=el("circle",{cx:xOf(v),cy:Y,r:13,fill:closed?"var(--purple)":"var(--hollow)",stroke:"var(--purple)","stroke-width":5,pathLength:100},anim?(closed?"draw fillLate":"draw"):"");
+  if(anim){c.style.strokeDasharray=100;c.style.setProperty("--len",100);c.style.strokeDashoffset=100;}
+  g.appendChild(c);return g;
+}
+function render(){
+  const st=STEPS[step];
+  $("ineq").innerHTML=M(MAIN,st.hl);
+  $("means").innerHTML=EX.or?"يكفي تحقق إحدى المتباينتين":"أي: "+M(P1)+" و "+M(P2);
+  svg.innerHTML="";
+  const now=k=>step===k;
+  if(step>=1){
+    svg.appendChild(drawLine(xOf(MIN)-30,Y,xOf(MAX)+30,Y,"var(--ink)",3,now(1)));
+    svg.appendChild(arrowHead(xOf(MAX)+30,Y,1,"var(--ink)",now(1)?"fadein":""));
+    svg.appendChild(arrowHead(xOf(MIN)-30,Y,-1,"var(--ink)",now(1)?"fadein":""));
+    for(let v=MIN;v<=MAX;v++){
+      const d=now(1)?{style:`animation-delay:${0.6+(v-MIN)*0.07}s`}:{};
+      const t1=el("line",{x1:xOf(v),y1:Y-9,x2:xOf(v),y2:Y+9},"tick"+(now(1)?" fadein":""));
+      const t2=el("text",{x:xOf(v),y:Y+42,direction:"ltr","unicode-bidi":"bidi-override"},"num"+(now(1)?" fadein":""));
+      if(d.style){t1.setAttribute("style",d.style);t2.setAttribute("style",d.style);}
+      t2.textContent=numVisual(v);
+      if(step===2&&(v===L||v===R)){t2.setAttribute("fill","var(--coral)");t2.style.fontWeight="700";}
+      svg.appendChild(t1);svg.appendChild(t2);
+    }
+  }
+  if(step===2){[L,R].forEach(v=>svg.appendChild(el("circle",{cx:xOf(v),cy:Y,r:20,fill:"none",stroke:"var(--coral)","stroke-width":4},"pulse")));}
+  // ghost direction arrows
+  const ghostOp=step>=7?0.3:1;
+  const ghost=(from,y,dir,color,k)=>{const end=dir>0?xOf(MAX)+10:xOf(MIN)-10;
+    const g=el("g",{opacity:ghostOp});g.appendChild(drawLine(xOf(from),y,end,y,color,8,now(k)));
+    g.appendChild(arrowHead(end,y,dir,color,now(k)?"fadein":""));
+    g.appendChild(el("line",{x1:xOf(from),y1:y,x2:xOf(from),y2:Y-14,stroke:color,"stroke-width":2,"stroke-dasharray":"4 5"}));svg.appendChild(g);};
+  if(step>=5)ghost(L,105,EX.or?-1:1,"var(--blue)",5);
+  if(step>=6)ghost(R,70,EX.or?1:-1,"var(--yellow)",6);
+  if(step>=7){
+    if(EX.or){
+      svg.appendChild(drawLine(xOf(L),Y,xOf(MIN)-24,Y,"var(--purple)",10,now(7)));
+      svg.appendChild(arrowHead(xOf(MIN)-24,Y,-1,"var(--purple)",now(7)?"fadein":""));
+      svg.appendChild(drawLine(xOf(R),Y,xOf(MAX)+24,Y,"var(--purple)",10,now(7)));
+      svg.appendChild(arrowHead(xOf(MAX)+24,Y,1,"var(--purple)",now(7)?"fadein":""));
+    }else svg.appendChild(drawLine(xOf(L),Y,xOf(R),Y,"var(--purple)",10,now(7)));
+  }
+  if(step>=3)svg.appendChild(circle(L,EX.lc,now(3)));
+  if(step>=4)svg.appendChild(circle(R,EX.rc,now(4)));
+  if(step===8){
+    const ok=el("text",{x:xOf(MID),y:Y-30,"text-anchor":"middle","font-size":"30",fill:"var(--green)","font-weight":"700"},"fadein");ok.textContent="✓";svg.appendChild(ok);
+    svg.appendChild(el("circle",{cx:xOf(MID),cy:Y,r:7,fill:"var(--green)"},"fadein"));
+    const no=el("text",{x:xOf(OUT),y:Y-30,"text-anchor":"middle","font-size":"30",fill:"var(--red)","font-weight":"700"},"fadein");no.textContent="✗";no.style.animationDelay=".8s";svg.appendChild(no);
+    const nd=el("circle",{cx:xOf(OUT),cy:Y,r:7,fill:"var(--red)"},"fadein");nd.style.animationDelay=".8s";svg.appendChild(nd);
+  }
+  // pencil
+  const pen=el("g",{},"pencil");const pt=el("text",{x:0,y:0,"font-size":"44"});pt.textContent="✏️";pen.appendChild(pt);svg.appendChild(pen);
+  const [fx,fy]=st.from||st.pen;
+  pen.style.transition="none";pen.style.transform=`translate(${fx-4}px,${fy+6}px)`;
+  pen.getBoundingClientRect();
+  requestAnimationFrame(()=>{pen.style.transition="";pen.style.transform=`translate(${st.pen[0]-4}px,${st.pen[1]+6}px)`;});
+
+  $("badge").textContent=ad(step+1);
+  $("ctitle").innerHTML=st.t;
+  $("ctext").innerHTML=st.x;
+  [...$("steps").children].forEach((b,k)=>b.className=k<step?"done":k===step?"now":"");
+  $("prev").disabled=step===0;$("next").disabled=step===STEPS.length-1;
+}
+
+function stop(){clearTimeout(timer);timer=null;$("play").textContent="▶ تشغيل كالفيديو";}
+function go(d){const k=step+d;if(k>=0&&k<STEPS.length){step=k;render();}}
+$("next").onclick=()=>{stop();go(1)};
+$("prev").onclick=()=>{stop();go(-1)};
+$("reset").onclick=()=>{stop();step=0;render();};
+$("play").onclick=()=>{
+  if(timer){stop();return;}
+  if(step===STEPS.length-1){step=0;render();}
+  $("play").textContent="⏸ إيقاف";
+  const tick=()=>{if(step<STEPS.length-1){go(1);timer=setTimeout(tick,5200);}else stop();};
+  timer=setTimeout(tick,3500);
+};
+document.addEventListener("keydown",e=>{
+  if(e.code==="Space"||e.key==="ArrowLeft"){e.preventDefault();stop();go(1);}
+  if(e.key==="ArrowRight"){e.preventDefault();stop();go(-1);}
+});
+["«و» ١","«و» ٢","«و» ٣","«و» ٤","«أو» ١","«أو» ٢","«أو» ٣"].forEach((t,k)=>{const b=document.createElement("button");b.textContent=t;if(k>=4)b.classList.add("orb");b.onclick=()=>{stop();setEx(k);step=0;buildDots();render();};$("exs").appendChild(b);});
+function buildDots(){$("steps").innerHTML="";STEPS.forEach((_,k)=>{const b=document.createElement("button");b.setAttribute("aria-label","الخطوة "+ad(k+1));b.onclick=()=>{stop();step=k;render();};$("steps").appendChild(b);});}
+setEx(0);buildDots();
+render();
+</script>
+</body>
+</html>
